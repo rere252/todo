@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/not-started',
+        destination: '/tasks/not-started',
         permanent: true,
       },
     ]

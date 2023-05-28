@@ -1,5 +1,6 @@
-import Navigation from '@/components/navigation'
-import './globals.css'
+import Navigation from '@/components/navigation';
+import './globals.css';
+import SessionProvider from '@/components/session-provider';
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,12 +15,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navigation />
-        <main>
-          <div>
-            {children}
-          </div>
-        </main>
+        <SessionProvider>
+          <Navigation />
+          <main>
+            <div>
+              {children}
+            </div>
+          </main>
+        </SessionProvider>
       </body>
     </html>
   )
