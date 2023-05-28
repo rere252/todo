@@ -1,0 +1,18 @@
+.flexColumn {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+  
+  input {
+    float: right;
+    color: black;
+    margin-left: 8px;
+  }
+
+  button {
+    margin-left: 8px;
+    border: 1px solid white;
+    padding: 0 4px;
+    border-radius: 8px;
+  }
+}
