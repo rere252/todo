@@ -1,3 +1,5 @@
+'use client';
+
 import {Task} from '@/model/task';
 import styles from './task-list.module.scss';
 
@@ -13,7 +15,7 @@ export default function TaskList(
     <ul>
       {tasks.map((task) => (
         <li className={styles.item} key={task.id}>
-          <button className={styles.action} type="button">{props.taskActionLabel}</button>{task.title}</li>
+          <button className={styles.action} type="button" onClick={() => console.log('hah')}>{props.taskActionLabel}</button>{task.title}</li>
       ))}
     </ul>
   );
