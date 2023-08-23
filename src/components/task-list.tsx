@@ -1,5 +1,3 @@
-'use client';
-
 import {Task} from '@/model/task';
 import styles from './task-list.module.scss';
 

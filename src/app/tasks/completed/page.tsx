@@ -1,3 +1,4 @@
+'use client';
 import TaskList from '@/components/task-list';
 import {getCompletedTasks} from '@/lib/data';
 import {Task} from '@/model/task';
