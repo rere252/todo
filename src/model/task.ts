@@ -1,5 +1,5 @@
 export interface Task {
-  id: number;
+  id?: number;
   title: string;
-  status: 'not-started' | 'in-progress' | 'completed';
+  status?: 'not-started' | 'in-progress' | 'completed';
 }

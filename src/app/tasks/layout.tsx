@@ -1,9 +1,4 @@
-'use client';
 
-import {useSession} from 'next-auth/react'
-
-export default function Tasks({children}: {children: React.ReactNode}) {
-  const {data} = useSession({required: true});
-
+export default async function Tasks({children}: {children: React.ReactNode}) {
   return (<>{children}</>);
 }

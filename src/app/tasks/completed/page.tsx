@@ -1,16 +1,9 @@
-'use client';
-import TaskList from '@/components/task-list';
 import {getCompletedTasks} from '@/lib/data';
-import {Task} from '@/model/task';
+import CompletedClient from './client';
 
-export default function Completed() {
-  const tasks = getCompletedTasks();
-
-  function reopenTask(task: Task) {
-    tasks.find((t) => t.id === task.id)!.status = 'not-started';
-  }
-
+export default async function Completed() {
+  const tasks = await getCompletedTasks();
   return (
-    <TaskList tasks={tasks} taskActionLabel="Reopen" taskActionHandler={reopenTask}/>
+    <CompletedClient completedTasks={tasks}/>
   );
 };
