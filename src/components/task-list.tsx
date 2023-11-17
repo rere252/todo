@@ -13,7 +13,7 @@ export default function TaskList(
     <ul>
       {tasks.map((task) => (
         <li className={styles.item} key={task.id}>
-          <button className={styles.action} type="button">{props.taskActionLabel}</button>{task.title}</li>
+          <button className={styles.action} type="button" onClick={() => props.taskActionHandler(task)}>{props.taskActionLabel}</button>{task.title}</li>
       ))}
     </ul>
   );

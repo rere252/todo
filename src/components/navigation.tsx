@@ -16,6 +16,9 @@ export default function Navigation() {
       <li>
         <Link href="/tasks/instructions">Instructions</Link>
       </li>
+      <li>
+        <Link href="/api/auth/signout">Sign Out</Link>
+      </li>
     </ul>
   </nav>
 }

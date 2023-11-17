@@ -5,4 +5,8 @@
   background-color: white;
   color: black;
   padding: 16px;
+
+  & > :last-child {
+    margin-left: auto;
+  }
 }
