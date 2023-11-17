@@ -4,11 +4,12 @@ import {Task} from '@/model/task';
 import styles from './not-started.module.scss';
 import {ChangeEvent, useState} from 'react';
 import TaskList from '@/components/task-list';
+import {createTask, startTask} from '@/lib/tasks.service';
 
 export default function NotStartedClient(props: {
   initialTasks: Task[]
 }) {
-  const [tasks, setTasks] = useState<Task[]>(props.initialTasks);
+  const [tasks, setTasks] = useState(props.initialTasks);
 
   const blankTask: Task = {
     title: ''
@@ -16,8 +17,7 @@ export default function NotStartedClient(props: {
   const [newTask, setNewTask] = useState(blankTask);
 
   async function createNewTask() {
-    const createdTaskResp = await fetch('/api/tasks/create', {method: 'POST', body: JSON.stringify(newTask)});
-    const createdTask: Task = await createdTaskResp.json();
+    const createdTask = await createTask(newTask);
     setTasks([
       ...tasks,
       createdTask
@@ -34,9 +34,9 @@ export default function NotStartedClient(props: {
     });
   }
 
-  function startTask(task: Task) {
-    tasks.find((t) => t.id === task.id)!.status = 'in-progress';
-    setTasks(tasks);
+  async function onStartTask(task: Task) {
+    const startedTask = await startTask(task.id!);
+    setTasks(tasks.filter(t => t.id !== startedTask.id));
   }
 
   return (
@@ -46,7 +46,7 @@ export default function NotStartedClient(props: {
       <button className={styles.addBtn} type="button" onClick={createNewTask}>Add Task</button>
     </section>
     <section>
-      <TaskList tasks={tasks} taskActionLabel="Start" taskActionHandler={startTask}/>
+      <TaskList tasks={tasks} taskActionLabel="Start" taskActionHandler={onStartTask}/>
     </section>
     </>
   );

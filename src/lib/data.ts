@@ -1,7 +1,6 @@
 import {Task} from '@/model/task';
 import {sql} from '@vercel/postgres';
 import {TaskState} from './task-state.type';
-import {NextResponse} from 'next/server';
 
 
 export async function createTables() {
@@ -15,7 +14,7 @@ export async function createTables() {
 }
 
 async function getTasksByState(state: TaskState) {
-  const tasks = (await sql.query<Task>(`SELECT * FROM tasks WHERE status = $1`, [state])).rows;
+  const tasks = (await sql.query<Task>(`SELECT * FROM tasks WHERE status = $1 ORDER BY id DESC`, [state])).rows;
   return tasks;
 }
 
@@ -36,5 +35,25 @@ export async function createTask(task: Task) {
     INSERT INTO tasks (title, status) VALUES (${task.title}, 'not-started')
     RETURNING *
   `;
-  return NextResponse.json(createdTask.rows[0]);
+  return createdTask.rows[0];
+}
+
+async function setTaskState(id: number, state: TaskState) {
+  const updatedTask = await sql<Task>`
+    UPDATE tasks SET status = ${state} WHERE id = ${id}
+    RETURNING *
+  `;
+  return updatedTask.rows[0];
+}
+
+export function startTask(id: number) {
+  return setTaskState(id, 'in-progress');
+}
+
+export function completeTask(id: number) {
+  return setTaskState(id, 'completed');
+}
+
+export function reopenTask(id: number) {
+  return setTaskState(id, 'not-started');
 }

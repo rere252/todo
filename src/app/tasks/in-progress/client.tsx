@@ -2,23 +2,25 @@
 
 import TaskList from '@/components/task-list';
 import {Task} from '@/model/task';
+import {completeTask} from '@/lib/tasks.service';
+import {useState} from 'react';
 
 export default function InProgressClient(
   props: {
     inProgressTasks: Task[]
   }
 ) {
-  const tasks = props.inProgressTasks;
+  const [tasks, setTasks] = useState(props.inProgressTasks);
 
-  function completeTask(task: Task) {
-    tasks.find((t) => t.id === task.id)!.status = 'completed';
-    // todo update the list
+  async function onCompleteTask(task: Task) {
+    const completedTask = await completeTask(task.id!);
+    setTasks(tasks.filter(t => t.id !== completedTask.id));
   }
 
   return (
     <>
       <section>
-        <TaskList tasks={tasks} taskActionLabel="Complete" taskActionHandler={completeTask}/>
+        <TaskList tasks={tasks} taskActionLabel="Complete" taskActionHandler={onCompleteTask}/>
       </section>
     </>
   );
